@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\ProductoApiRequest;
+use App\Http\Response\Api\JsonHttpResponse;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class ProductoApiController extends Controller
     public function index()
     {
         $productos = Producto::get(); //ORM Eloquent
-        return response()->json($productos);
+        return JsonHttpResponse::successResponse($productos, 'Success');
     }
 
     /**
@@ -29,7 +30,7 @@ class ProductoApiController extends Controller
             'precio' => $request->precio,
         ]);
 
-        return response()->json($producto);
+        return JsonHttpResponse::successResponse($producto, 'Creado');
     }
 
     /**
@@ -38,7 +39,7 @@ class ProductoApiController extends Controller
     public function show(string $id)
     {
         $producto = Producto::where('id', $id)->first();
-        return response()->json($producto);
+        return JsonHttpResponse::successResponse($producto, 'Success');
     }
 
     /**
@@ -52,7 +53,7 @@ class ProductoApiController extends Controller
             'precio' => $request->precio,
         ]);
 
-        return response()->json($producto);
+        return JsonHttpResponse::successResponse($producto, 'Actualizado');
     }
 
     /**
@@ -62,6 +63,6 @@ class ProductoApiController extends Controller
     {
         $producto = Producto::where('id', $id)->delete();
 
-        return response()->json($producto);
+        return JsonHttpResponse::successResponse($producto, 'Eliminado');
     }
 }
